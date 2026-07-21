@@ -7,6 +7,9 @@ import Services from './pages/Services.jsx'
 import Careers from './pages/Careers.jsx'
 import Recruitment from './pages/Recruitment.jsx'
 import Contact from './pages/Contact.jsx'
+import AdminLogin from './pages/AdminLogin.jsx'
+import AdminDashboard from './pages/AdminDashboard.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 export default function App() {
   return (
@@ -20,6 +23,15 @@ export default function App() {
           <Route path="/careers" element={<Careers />} />
           <Route path="/recruitment" element={<Recruitment />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
       <Footer />

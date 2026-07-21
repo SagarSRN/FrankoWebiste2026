@@ -118,7 +118,7 @@ export default function Navbar() {
             <img
               src={logo}
               alt="FrankoJulia"
-              className={`transition-all duration-500 ${scrolled ? 'h-7' : 'h-[30px]'}`}
+              className={`transition-all duration-500 ${scrolled ? 'h-10' : 'h-[50px]'}`}
               style={{ filter: scrolled ? 'none' : 'brightness(0) invert(1)' }}
             />
           </NavLink>

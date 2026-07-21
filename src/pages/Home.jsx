@@ -1,24 +1,20 @@
 import TrustedBrands from '../components/TrustedBrands.jsx'
+import Portfolio from '../components/Portfolio.jsx'
+import SplitHero from '../components/SplitHero.jsx'
+import video1 from '../assets/Videos/Video 1.mp4'
+import video2 from '../assets/Videos/Video 2.mp4'
+
 export default function Home() {
   return (
     <div>
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/15 to-black/55" />
-        <div className="relative z-10 text-center text-cream px-6">
-          <span className="block text-[12px] tracking-widest2 text-gold mb-4">MUMBAI · DUBAI</span>
-          <h1 className="font-display font-medium text-5xl md:text-7xl leading-tight">
-            Luxury Retail Fixtures,<br />Precisely Crafted
-          </h1>
-        </div>
-      </section>
+      <SplitHero
+        videoLeft={video1}
+        videoRight={video2}
+        eyebrow="MUMBAI · DUBAI"
+        title={<>Luxury Retail Fixtures,<br />Precisely Crafted</>}
+      />
+
+      <TrustedBrands />
 
       <section className="max-w-5xl mx-auto px-6 py-28 text-center">
         <h2 className="font-display text-3xl md:text-4xl text-teal mb-6">
@@ -45,6 +41,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <Portfolio />
     </div>
   )
 }
