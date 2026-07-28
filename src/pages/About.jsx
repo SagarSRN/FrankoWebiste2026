@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal.jsx'
 import Banner from '../assets/Retail Image/Banner_Aboutus.png'
+import PhilosophyImg from '../assets/Retail Image/imgi_60_Rb-Showcase-2-768x455.jpg'
+import MumbaiImg from '../assets/Retail Image/imgi_91_Bo-Showcase-5-768x576.jpg'
+import DubaiImg from '../assets/Retail Image/imgi_88_bvl-Showcase-1-225x300.jpg'
+
 const STATS = [
   { value: '15+', label: 'Years of Craft' },
   { value: '500+', label: 'Fixtures Delivered' },
@@ -8,13 +12,25 @@ const STATS = [
   { value: '50+', label: 'Brand Partners' },
 ]
 
+const STUDIOS = [
+  {
+    city: 'Mumbai, India',
+    img: MumbaiImg,
+    text: 'Our manufacturing base — design, joinery, metalwork and finishing under one roof, serving clients across India.',
+  },
+  {
+    city: 'Dubai, UAE',
+    img: DubaiImg,
+    text: 'Regional delivery and installation, supporting clients across the wider Gulf.',
+  },
+]
+
 export default function About() {
   return (
     <div>
-      {/* Full-bleed hero image */}
       <section className="relative h-[70vh] min-h-[480px] flex items-center justify-center overflow-hidden">
         <img
-          src= {Banner}
+          src={Banner}
           alt="FrankoJulia studio"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -25,7 +41,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Intro statement */}
       <section className="max-w-3xl mx-auto px-6 py-24 text-center">
         <Reveal>
           <p className="text-ink/70 font-light leading-relaxed text-lg">
@@ -37,7 +52,6 @@ export default function About() {
         </Reveal>
       </section>
 
-      {/* Stats band */}
       <section className="bg-teal-dark text-cream py-16">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
           {STATS.map((s, i) => (
@@ -49,11 +63,10 @@ export default function About() {
         </div>
       </section>
 
-      {/* Philosophy — image paired with text */}
       <section className="max-w-6xl mx-auto px-6 py-28 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
         <Reveal className="overflow-hidden">
           <img
-            src="https://picsum.photos/id/1060/900/1100"
+            src={PhilosophyImg}
             alt="Craftsmanship detail"
             className="w-full h-[480px] object-cover transition-transform duration-700 hover:scale-105"
           />
@@ -72,7 +85,6 @@ export default function About() {
         </Reveal>
       </section>
 
-      {/* Studios */}
       <section className="bg-[#F1ECE2] py-28">
         <div className="max-w-6xl mx-auto px-6">
           <Reveal className="text-center mb-16">
@@ -81,18 +93,7 @@ export default function About() {
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {[
-              {
-                city: 'Mumbai, India',
-                img: 'https://picsum.photos/id/1031/900/650',
-                text: 'Our manufacturing base — design, joinery, metalwork and finishing under one roof, serving clients across India.',
-              },
-              {
-                city: 'Dubai, UAE',
-                img: 'https://picsum.photos/id/1076/900/650',
-                text: 'Regional delivery and installation, supporting clients across the wider Gulf.',
-              },
-            ].map((studio, i) => (
+            {STUDIOS.map((studio, i) => (
               <Reveal key={studio.city} delay={i * 150} className="group relative overflow-hidden">
                 <img
                   src={studio.img}
@@ -110,7 +111,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Closing CTA */}
       <section className="bg-teal-dark text-cream py-24 text-center px-6">
         <Reveal>
           <h2 className="font-display text-3xl md:text-4xl mb-6">

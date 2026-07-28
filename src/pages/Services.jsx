@@ -1,37 +1,25 @@
 import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal.jsx'
 import Testimonials from '../components/Testimonials.jsx'
+import ServicesHero from '../assets/Retail Image/imgi_87_Cad-Showcase-2-225x300.jpg'
+import DesignImg from '../assets/Retail Image/imgi_56_Rb-Showcase-1-300x169 5.jpg'
+import ManufacturingImg from '../assets/Retail Image/imgi_60_Rb-Showcase-2-768x455.jpg'
+import ProjectMgmtImg from '../assets/Retail Image/imgi_87_Cad-Showcase-2-225x300 s.jpg'
+import InstallImg from '../assets/Retail Image/imgi_91_Bo-Showcase-5-768x576.jpg'
 
 const SERVICES = [
-  {
-    title: 'Design & Engineering',
-    text: 'Concept development, CAD detailing and material specification aligned to brand standards.',
-    img: 'https://picsum.photos/id/1080/700/500',
-  },
-  {
-    title: 'Manufacturing',
-    text: 'Precision joinery, metal fabrication, glasswork and hand-finishing under one roof.',
-    img: 'https://picsum.photos/id/1082/700/500',
-  },
-  {
-    title: 'Project Management',
-    text: 'Single point of contact from purchase order to site handover.',
-    img: 'https://picsum.photos/id/1074/700/500',
-  },
-  {
-    title: 'Installation',
-    text: 'Turnkey install teams covering India, the UAE and the wider Gulf.',
-    img: 'https://picsum.photos/id/1076/700/500',
-  },
+  { title: 'Design & Engineering', text: 'Concept development, CAD detailing and material specification aligned to brand standards.', img: DesignImg },
+  { title: 'Manufacturing', text: 'Precision joinery, metal fabrication, glasswork and hand-finishing under one roof.', img: ManufacturingImg },
+  { title: 'Project Management', text: 'Single point of contact from purchase order to site handover.', img: ProjectMgmtImg },
+  { title: 'Installation', text: 'Turnkey install teams covering India, the UAE and the wider Gulf.', img: InstallImg },
 ]
 
 export default function Services() {
   return (
     <div>
-      {/* Full-bleed hero image, same treatment as About */}
       <section className="relative h-[60vh] min-h-[420px] flex items-center justify-center overflow-hidden">
         <img
-          src="https://picsum.photos/id/1050/1600/900"
+          src={ServicesHero}
           alt="FrankoJulia manufacturing"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -42,7 +30,6 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Numbered service cards, now image-backed with hover motion */}
       <section className="max-w-6xl mx-auto px-6 py-28">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {SERVICES.map((s, i) => (
@@ -66,12 +53,9 @@ export default function Services() {
 
       <Testimonials />
 
-      {/* Closing CTA */}
       <section className="bg-teal-dark text-cream py-24 text-center px-6">
         <Reveal>
-          <h2 className="font-display text-3xl md:text-4xl mb-6">
-            Have a project in mind?
-          </h2>
+          <h2 className="font-display text-3xl md:text-4xl mb-6">Have a project in mind?</h2>
           <Link
             to="/contact"
             className="inline-block border border-cream/60 text-cream text-[12px] tracking-widest2 uppercase px-8 py-4
