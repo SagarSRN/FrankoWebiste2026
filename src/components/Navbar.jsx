@@ -14,51 +14,24 @@ const RIGHT_LINKS = [
   { to: '/contact', label: 'Contact', key: 'contact' },
 ]
 
+const ALL_LINKS = [...LEFT_LINKS, ...RIGHT_LINKS]
+
 const PREVIEW = {
-  home: {
-    video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    eyebrow: 'FRANKOJULIA',
-    title: 'Home',
-    text: 'Luxury retail fixture design and manufacture, from Mumbai to Dubai.',
-  },
-  about: {
-    video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    eyebrow: 'OUR STORY',
-    title: 'About Us',
-    text: 'Two decades of craftsmanship across luxury retail, travel retail and aviation.',
-  },
-  services: {
-    video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-    eyebrow: 'CAPABILITIES',
-    title: 'Services',
-    text: 'Design, engineering, manufacture and install — one accountable partner.',
-  },
-  careers: {
-    video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    eyebrow: 'JOIN US',
-    title: 'Careers',
-    text: 'People. Perfectly placed. Open roles across design, production and client management.',
-  },
-  recruitment: {
-    video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-    eyebrow: 'APPLY NOW',
-    title: 'Recruitment',
-    text: 'Submit your details and track your application with our HR team.',
-  },
-  contact: {
-    video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-    eyebrow: 'GET IN TOUCH',
-    title: 'Contact',
-    text: 'Speak to our Mumbai or Dubai studio about your next retail environment.',
-  },
+  home: { eyebrow: 'FRANKOJULIA', title: 'Home', text: 'Luxury retail fixture design and manufacture, from Mumbai to Dubai.' },
+  about: { eyebrow: 'OUR STORY', title: 'About Us', text: 'Two decades of craftsmanship across luxury retail, travel retail and aviation.' },
+  services: { eyebrow: 'CAPABILITIES', title: 'Services', text: 'Design, engineering, manufacture and install — one accountable partner.' },
+  careers: { eyebrow: 'JOIN US', title: 'Careers', text: 'People. Perfectly placed. Open roles across design, production and client management.' },
+  recruitment: { eyebrow: 'APPLY NOW', title: 'Recruitment', text: 'Submit your details and track your application with our HR team.' },
+  contact: { eyebrow: 'GET IN TOUCH', title: 'Contact', text: 'Speak to our Mumbai or Dubai studio about your next retail environment.' },
 }
 
-function NavItem({ to, label, scrolled, onEnter }) {
+function NavItem({ to, label, scrolled, onEnter, onClick }) {
   return (
     <li>
       <NavLink
         to={to}
         onMouseEnter={onEnter}
+        onClick={onClick}
         className={({ isActive }) =>
           `nav-link text-[12px] tracking-widest2 uppercase transition-colors duration-300 hover:text-gold ${
             scrolled ? 'text-teal' : 'text-cream'
@@ -74,6 +47,7 @@ function NavItem({ to, label, scrolled, onEnter }) {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [activeKey, setActiveKey] = useState(null)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const hideTimer = useRef(null)
 
   useEffect(() => {
@@ -81,6 +55,12 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Lock body scroll while the mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [mobileOpen])
 
   const showPreview = (key) => {
     clearTimeout(hideTimer.current)
@@ -97,71 +77,75 @@ export default function Navbar() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 grid grid-cols-[1fr_auto_1fr] items-center px-6 md:px-12 transition-all duration-500 ${
-          scrolled ? 'h-[76px] bg-cream shadow-[0_2px_18px_rgba(0,0,0,0.06)]' : 'h-24 bg-transparent'
+          scrolled || mobileOpen ? 'h-[76px] bg-cream shadow-[0_2px_18px_rgba(0,0,0,0.06)]' : 'h-24 bg-transparent'
         }`}
         onMouseLeave={scheduleHide}
       >
         <ul className="hidden md:flex justify-end gap-10 pr-11">
           {LEFT_LINKS.map((l) => (
-            <NavItem
-              key={l.key}
-              to={l.to}
-              label={l.label}
-              scrolled={scrolled}
-              onEnter={() => showPreview(l.key)}
-            />
+            <NavItem key={l.key} to={l.to} label={l.label} scrolled={scrolled} onEnter={() => showPreview(l.key)} />
           ))}
         </ul>
 
         <div className="flex items-center justify-center">
-          <NavLink to="/">
+          <NavLink to="/" onClick={() => setMobileOpen(false)}>
             <img
               src={logo}
               alt="FrankoJulia"
-              className={`transition-all duration-500 ${scrolled ? 'h-10' : 'h-[50px]'}`}
-              style={{ filter: scrolled ? 'none' : 'brightness(0) invert(1)' }}
+              className={`transition-all duration-500 ${scrolled || mobileOpen ? 'h-7' : 'h-[30px]'}`}
+              style={{ filter: (scrolled || mobileOpen) ? 'none' : 'brightness(0) invert(1)' }}
             />
           </NavLink>
         </div>
 
         <ul className="hidden md:flex justify-start gap-10 pl-11">
           {RIGHT_LINKS.map((l) => (
-            <NavItem
-              key={l.key}
-              to={l.to}
-              label={l.label}
-              scrolled={scrolled}
-              onEnter={() => showPreview(l.key)}
-            />
+            <NavItem key={l.key} to={l.to} label={l.label} scrolled={scrolled} onEnter={() => showPreview(l.key)} />
           ))}
         </ul>
 
-        <span className={`md:hidden text-[11px] tracking-widest2 uppercase ${scrolled ? 'text-teal' : 'text-cream'}`}>
-          Menu
-        </span>
+        {/* Mobile hamburger — replaces the old inert "Menu" label */}
+        <button
+          type="button"
+          onClick={() => setMobileOpen((v) => !v)}
+          className="md:hidden justify-self-end flex flex-col gap-[5px] w-7 z-50"
+          aria-label="Toggle menu"
+        >
+          <span className={`block h-[1.5px] w-full transition-all duration-300 ${scrolled || mobileOpen ? 'bg-teal' : 'bg-cream'} ${mobileOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
+          <span className={`block h-[1.5px] w-full transition-all duration-300 ${scrolled || mobileOpen ? 'bg-teal' : 'bg-cream'} ${mobileOpen ? 'opacity-0' : 'opacity-100'}`} />
+          <span className={`block h-[1.5px] w-full transition-all duration-300 ${scrolled || mobileOpen ? 'bg-teal' : 'bg-cream'} ${mobileOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
+        </button>
       </header>
 
-      {/* Hover preview panel */}
+      {/* Mobile menu panel */}
       <div
-        className={`fixed inset-0 h-screen z-40 transition-opacity duration-500 ${
+        className={`md:hidden fixed inset-0 z-40 bg-cream transition-opacity duration-300 ${
+          mobileOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+        }`}
+      >
+        <ul className="flex flex-col items-center justify-center h-full gap-8 pt-20">
+          {ALL_LINKS.map((l) => (
+            <li key={l.key}>
+              <NavLink
+                to={l.to}
+                onClick={() => setMobileOpen(false)}
+                className="text-teal text-lg tracking-widest2 uppercase font-display"
+              >
+                {l.label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Hover preview panel — desktop only, no equivalent needed on mobile since there's no hover */}
+      <div
+        className={`hidden md:block fixed inset-0 h-screen z-40 transition-opacity duration-500 ${
           active ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
         onMouseEnter={() => clearTimeout(hideTimer.current)}
         onMouseLeave={scheduleHide}
       >
-        {Object.entries(PREVIEW).map(([key, item]) => (
-          <video
-            key={key}
-            src={item.video}
-            loop
-            muted
-            playsInline
-            autoPlay={activeKey === key}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-              activeKey === key ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
-        ))}
         <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 to-black/65" />
         {active && (
           <div className="absolute left-6 md:left-12 bottom-16 max-w-xl text-cream">
